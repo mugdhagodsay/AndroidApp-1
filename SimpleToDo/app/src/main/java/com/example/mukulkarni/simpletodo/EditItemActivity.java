@@ -12,6 +12,7 @@ public class EditItemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Edit Item");
         setContentView(R.layout.activity_edit_item);
         editText = (EditText) findViewById(R.id.etEditItem);
         Intent intent = getIntent();
