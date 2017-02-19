@@ -21,6 +21,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * @author Mugdha Kulkarni
+ */
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> items;
@@ -42,29 +45,36 @@ public class MainActivity extends AppCompatActivity {
         readItems();
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-        // items.add("First Item");
-        // items.add("Second Item");
         setupListViewListener();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    /**
+     * Add an item to the list
+     * @param v
+     */
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
+            itemsAdapter.add(itemText);
         etNewItem.setText("");
         writeItems();
     }
 
+    /**
+     * Set up ListView listeners for click and longClick
+     * a click will let user edit the clicked item
+     * a long click will delete the clicked item from the list
+     */
     private void setupListViewListener() {
         lvItems.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapter, View item, int pos, long id) {
                         Intent i = new Intent(MainActivity.this, EditItemActivity.class);
-                        i.putExtra("text", lvItems.getItemAtPosition(pos).toString());
+                        i.putExtra("text", items.get(pos));
                         i.putExtra("position", pos);
                         startActivityForResult(i, REQUEST_CODE);
                     }
@@ -107,13 +117,10 @@ public class MainActivity extends AppCompatActivity {
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             // Extract name value from result extras
-            String name = data.getExtras().getString("text");
-            int code = data.getExtras().getInt("code", 0);
+            String editedItem = data.getExtras().getString("text");
             int position = data.getExtras().getInt("position");
-            // Toast the name to display temporarily on screen
-            //  Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
             itemsAdapter.remove(itemsAdapter.getItem(position));
-            itemsAdapter.insert(name, position);
+            itemsAdapter.insert(editedItem, position);
             writeItems();
         }
     }
