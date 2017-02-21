@@ -9,14 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.mukulkarni.simpletodo.R;
 import com.example.mukulkarni.simpletodo.fragments.DatePickerFragment;
 import com.example.mukulkarni.simpletodo.todo.Task;
 
 public class EditItemActivity extends BaseActivity {
-    private TextView textView;
     private EditText task;
     private EditText priority;
     private EditText notes;
@@ -99,31 +97,5 @@ public class EditItemActivity extends BaseActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-    public void onSaveItem(View v) {
-        int position = 0;
-        String originalText = "";
-        Intent originalIntent = getIntent();
-        Bundle bundle = originalIntent.getExtras();
-        Task originalTask = (Task) bundle.getSerializable("task");
-        if (bundle != null) {
-            position = (Integer) bundle.get("position");
-            originalText = originalTask.getTask();
-        }
-        // Prepare data intent
-        Intent data = new Intent();
-        Task updatedTask = new Task();
-        updatedTask.setTask(task.getText().toString());
-        updatedTask.setPriority(priority.getText().toString());
-        updatedTask.setNotes(notes.getText().toString());
-        updatedTask.setDueDate(dueDate.getText().toString());
-        // Pass relevant data back as a result
-        data.putExtra("originalTask", originalText);
-        data.putExtra("task", updatedTask);
-        data.putExtra("code", 200); // ints work too
-        data.putExtra("position", position);
-        // Activity finished ok, return the data
-        setResult(RESULT_OK, data); // set result code and bundle data for response
-        finish(); // closes the activity, pass data to parent
     }
 }

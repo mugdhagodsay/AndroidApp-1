@@ -29,10 +29,11 @@ public class AddItemActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setTitle(R.string.add_item_activity);
         setContentView(R.layout.activity_add_item);
-        addTask = (EditText) findViewById(R.id.et_add_new_item);
         priority = (EditText) findViewById(R.id.et_priority);
         notes = (EditText) findViewById(R.id.et_notes);
         dueDate = (Button) findViewById(R.id.btn_date);
+        addTask = (EditText) findViewById(R.id.et_add_new_item);
+        addTask.requestFocus();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
     }
@@ -78,22 +79,5 @@ public class AddItemActivity extends BaseActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-    public void onSaveItem(View v) {
-        Intent originalIntent = getIntent();
-        Bundle bundle = originalIntent.getExtras();
-        // Prepare data intent
-        Intent data = new Intent();
-        Task task = new Task();
-        task.setTask(addTask.getText().toString());
-        task.setPriority(priority.getText().toString());
-        task.setNotes(notes.getText().toString());
-        task.setDueDate(dueDate.getText().toString());
-        // Pass relevant data back as a result
-        data.putExtra("map", task);
-        data.putExtra("code", 200); // ints work too
-        // Activity finished ok, return the data
-        setResult(RESULT_OK, data); // set result code and bundle data for response
-        finish(); // closes the activity, pass data to parent
     }
 }

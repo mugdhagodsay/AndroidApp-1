@@ -68,16 +68,6 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-    /**
-     * Add an item to the list
-     *
-     * @param v
-     */
-    private void onAddItem(View v) {
-        Intent i = new Intent(MainActivity.this, AddItemActivity.class);
-        startActivityForResult(i, REQUEST_ADD_ITEM);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
