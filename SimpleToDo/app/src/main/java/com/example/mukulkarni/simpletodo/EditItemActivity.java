@@ -35,15 +35,18 @@ public class EditItemActivity extends AppCompatActivity {
 
     public void onSaveItem(View v) {
         int position = 0;
+        String originalTask = "";
         EditText et = (EditText) findViewById(R.id.etEditItem);
         Intent originalIntent = getIntent();
         Bundle bundle = originalIntent.getExtras();
         if (bundle != null) {
             position = (Integer) bundle.get("position");
+            originalTask = (String) bundle.get("text");
         }
         // Prepare data intent
         Intent data = new Intent();
         // Pass relevant data back as a result
+        data.putExtra("originalTask", originalTask);
         data.putExtra("text", et.getText().toString());
         data.putExtra("code", 200); // ints work too
         data.putExtra("position", position);
