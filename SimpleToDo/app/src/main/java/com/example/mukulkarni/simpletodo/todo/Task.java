@@ -9,6 +9,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  * Created by mukulkarni on 2/20/17.
  */
 
+// Task table for the SimpleTodo database
+    
 @Table(database = TaskDataBase.class)
 public class Task extends BaseModel {
     @PrimaryKey

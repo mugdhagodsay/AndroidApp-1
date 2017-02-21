@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Read tasks from the Database
     private void readFromDb() {
         try {
             List<Task> taskList = SQLite.select().from(Task.class).queryList();
@@ -121,12 +122,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Write the task to the Database
     private void writeToDb(String item) {
         Task task = new Task();
         task.setTask(item);
         task.save();
     }
 
+    //Update database
     private void updateDb(String item, String newItem) {
         deleteFromDb(item);
         Task task = new Task();
