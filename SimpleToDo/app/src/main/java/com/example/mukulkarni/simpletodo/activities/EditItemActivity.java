@@ -7,35 +7,49 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.mukulkarni.simpletodo.R;
 import com.example.mukulkarni.simpletodo.fragments.DatePickerFragment;
+import com.example.mukulkarni.simpletodo.listeners.CustomOnItemSelectedListener;
 import com.example.mukulkarni.simpletodo.todo.Task;
 
-public class EditItemActivity extends BaseActivity {
+public class EditItemActivity extends BaseActivity  {
     private EditText task;
-    private EditText priority;
+    // private EditText priority;
     private EditText notes;
     private Button dueDate;
+    private Spinner prioritySpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.edit_activity);
-        setContentView(R.layout.activity_edit_item);
-        task = (EditText) findViewById(R.id.et_edit_item);
-        priority = (EditText) findViewById(R.id.et_edit_priority);
-        notes = (EditText) findViewById(R.id.et_edit_notes);
+        setContentView(R.layout.activity_add_item);
+        task = (EditText) findViewById(R.id.et_add_new_item);
+        //  priority = (EditText) findViewById(R.id.et_priority);
+        notes = (EditText) findViewById(R.id.et_notes);
         dueDate = (Button) findViewById(R.id.btn_date);
+         prioritySpinner = (Spinner) findViewById(R.id.priority_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.priorities, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        prioritySpinner.setAdapter(adapter);
+        addListenerOnSpinnerItemSelection();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if (bundle != null) {
+        if (bundle.get("requestCode").equals(200)) {
             //Display item's initial value
-            Task taskTobeEdited = (Task)bundle.getSerializable("task");
+            Task taskTobeEdited = (Task) bundle.getSerializable("task");
             task.setText(taskTobeEdited.getTask());
-            priority.setText(taskTobeEdited.getPriority());
+            //  priority.setText(taskTobeEdited.getPriority());
+            prioritySpinner.setSelection(adapter.getPosition(taskTobeEdited.getPriority()));
             notes.setText(taskTobeEdited.getNotes());
             dueDate.setText(taskTobeEdited.getDueDate());
 
@@ -44,6 +58,10 @@ public class EditItemActivity extends BaseActivity {
         } else {
             task.setText("");
         }
+    }
+
+    public void addListenerOnSpinnerItemSelection() {
+        prioritySpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
     }
 
     public void showDatePickerDialog(View v) {
@@ -69,18 +87,22 @@ public class EditItemActivity extends BaseActivity {
                 String originalText = "";
                 Intent originalIntent = getIntent();
                 Bundle bundle = originalIntent.getExtras();
-                Task originalTask = (Task) bundle.getSerializable("task");
-                if (bundle != null) {
-                    position = (Integer) bundle.get("position");
-                    originalText = originalTask.getTask();
+                if (!bundle.get("requestCode").equals(201)) {
+                    Task originalTask = (Task) bundle.getSerializable("task");
+                    if (bundle != null) {
+                        position = (Integer) bundle.get("position");
+                        originalText = originalTask.getTask();
+                    }
                 }
                 // Prepare data intent
                 Intent data = new Intent();
                 Task updatedTask = new Task();
                 updatedTask.setTask(task.getText().toString());
-                updatedTask.setPriority(priority.getText().toString());
+                // updatedTask.setPriority(priority.getText().toString());
+                updatedTask.setPriority(prioritySpinner.getSelectedItem().toString());
                 updatedTask.setNotes(notes.getText().toString());
                 updatedTask.setDueDate(dueDate.getText().toString());
+
                 // Pass relevant data back as a result
                 data.putExtra("originalTask", originalText);
                 data.putExtra("task", updatedTask);

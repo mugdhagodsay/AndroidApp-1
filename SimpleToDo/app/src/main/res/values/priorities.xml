@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array
+    <string-array
         name="priorities">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </integer-array>
+        <item>HIGH</item>
+        <item>MEDIUM</item>
+        <item>LOW</item>
+    </string-array>
 </resources>

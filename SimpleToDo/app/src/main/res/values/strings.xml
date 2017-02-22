@@ -13,4 +13,6 @@
     <string name="delete">Delete</string>
     <string name="delete_title">Delete An Item</string>
     <string name="pick_date">Pick Completion Date</string>
+    <string name="set_default_message_due_date">Set A Due Date</string>
+    <string name="item_label">Task Name</string>
 </resources>

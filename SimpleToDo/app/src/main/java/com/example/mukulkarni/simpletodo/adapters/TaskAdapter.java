@@ -34,7 +34,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         if (convertView == null) {
 
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.task_row, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_row, parent, false);
 
         }
 
@@ -45,10 +45,13 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         TextView tvDate = (TextView) convertView.findViewById(R.id.displayDate);
 
+        TextView tvPriority = (TextView) convertView.findViewById(R.id.task_priority);
+
         // Populate the data into the template view using the data object
 
         tvTask.setText(task.getTask());
         tvDate.setText(task.getDueDate());
+        tvPriority.setText(task.getPriority());
 
 //        Calendar c = Calendar.getInstance();
 //        System.out.println("Current time => " + c.getTime());

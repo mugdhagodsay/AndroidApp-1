@@ -73,7 +73,8 @@ public class MainActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_add:
                 // User chose the "Settings" item, show the app settings UI...
-                Intent i = new Intent(MainActivity.this, AddItemActivity.class);
+                Intent i = new Intent(MainActivity.this, EditItemActivity.class);
+                i.putExtra("requestCode", REQUEST_ADD_ITEM);
                 startActivityForResult(i, REQUEST_ADD_ITEM);
                 return true;
 
@@ -84,15 +85,15 @@ public class MainActivity extends BaseActivity {
 
         }
     }
-    private void setupAddButtonListener() {
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, AddItemActivity.class);
-                startActivityForResult(i, REQUEST_ADD_ITEM);
-            }
-        });
-    }
+//    private void setupAddButtonListener() {
+//        buttonAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(MainActivity.this, EditItemActivity.class);
+//                startActivityForResult(i, REQUEST_ADD_ITEM);
+//            }
+//        });
+//    }
 
     /**
      * Set up ListView listeners for click and longClick
@@ -107,6 +108,7 @@ public class MainActivity extends BaseActivity {
                         Intent i = new Intent(MainActivity.this, EditItemActivity.class);
                         i.putExtra("position", pos);
                         i.putExtra("task", taskAdapter.getItem(pos));
+                        i.putExtra("requestCode", REQUEST_EDIT_ITEM);
                         startActivityForResult(i, REQUEST_EDIT_ITEM);
                     }
                 }
@@ -185,8 +187,9 @@ public class MainActivity extends BaseActivity {
             updateDb(originalTask, (Task) data.getExtras().getSerializable("task"));
         }
         if (resultCode == RESULT_OK && requestCode == REQUEST_ADD_ITEM) {
-            Task task = (Task) data.getExtras().getSerializable("map");
+            Task task = (Task) data.getExtras().getSerializable("task");
             taskAdapter.add(task);
+            updateDb(task.getTask(), task);
         }
     }
 
