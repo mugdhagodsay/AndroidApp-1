@@ -17,9 +17,8 @@ import com.example.mukulkarni.simpletodo.fragments.DatePickerFragment;
 import com.example.mukulkarni.simpletodo.listeners.CustomOnItemSelectedListener;
 import com.example.mukulkarni.simpletodo.todo.Task;
 
-public class EditItemActivity extends BaseActivity  {
+public class EditItemActivity extends BaseActivity {
     private EditText task;
-    // private EditText priority;
     private EditText notes;
     private Button dueDate;
     private Spinner prioritySpinner;
@@ -33,7 +32,7 @@ public class EditItemActivity extends BaseActivity  {
         //  priority = (EditText) findViewById(R.id.et_priority);
         notes = (EditText) findViewById(R.id.et_notes);
         dueDate = (Button) findViewById(R.id.btn_date);
-         prioritySpinner = (Spinner) findViewById(R.id.priority_spinner);
+        prioritySpinner = (Spinner) findViewById(R.id.priority_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.priorities, android.R.layout.simple_spinner_item);
@@ -48,7 +47,6 @@ public class EditItemActivity extends BaseActivity  {
             //Display item's initial value
             Task taskTobeEdited = (Task) bundle.getSerializable("task");
             task.setText(taskTobeEdited.getTask());
-            //  priority.setText(taskTobeEdited.getPriority());
             prioritySpinner.setSelection(adapter.getPosition(taskTobeEdited.getPriority()));
             notes.setText(taskTobeEdited.getNotes());
             dueDate.setText(taskTobeEdited.getDueDate());

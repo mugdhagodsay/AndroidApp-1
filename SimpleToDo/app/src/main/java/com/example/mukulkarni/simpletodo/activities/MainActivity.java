@@ -85,15 +85,6 @@ public class MainActivity extends BaseActivity {
 
         }
     }
-//    private void setupAddButtonListener() {
-//        buttonAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, EditItemActivity.class);
-//                startActivityForResult(i, REQUEST_ADD_ITEM);
-//            }
-//        });
-//    }
 
     /**
      * Set up ListView listeners for click and longClick
@@ -123,6 +114,10 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
+    /**
+     * Show Alert dialogue when the user is trying to delete an item
+     * @param pos
+     */
     public void showAlert(int pos)
     {
         final int position = pos;
@@ -142,7 +137,7 @@ public class MainActivity extends BaseActivity {
                 dialog.cancel();
             }
         });
-// Create the AlertDialog
+        // Create the AlertDialog
         AlertDialog dialog = builder.create();
         dialog.show();
     }
